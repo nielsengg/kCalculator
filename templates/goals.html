@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+
+        <!-- CSS link -->
+        <link rel="stylesheet" href="../static/style.css">
+
+        <!-- Font link -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+        <title>kCalculator</title>
+        
+        <style>
+            body{
+                overflow-x: hidden;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div id="pageContainer">
+            <!-- Top Page -->
+            <div id="topPage" class="containerVertical">
+                <!-- Navegation -->
+                <div class="elementVertical">
+                    <header class="header"> 
+                        <nav class="navbar">
+                            <a href="/home" class="index">Home</a></li>
+                            <a>-</a>
+                            <a class="index active">Goals</a></li>
+                        </nav>
+                    </header>
+                </div>
+
+                <!-- Title -->
+                <div class="elementVertical">
+                    <h1>kCalculator</h1>
+                </div>  
+
+                <hr>
+            </div>
+
+            <!-- Content -->
+            <div class="containerHorizontal" id="bodyAll">
+                <!-- Goals Text -->
+                <div class="elementHorizontal">
+                    <p id="warning"></p>
+                </div>
+
+                <!-- Daily Goals -->
+                <div class="elementHorizontal">
+                    <div class="form-container">
+                        <div class="form-item">
+                            <label for="water">Water:</label>
+                            <div class="value" id="water"></div>
+                        </div>
+                        <div class="form-item">
+                            <label for="calories">Calories:</label>
+                            <div class="value" id="calories"></div>
+                        </div>
+                        <div class="form-item">
+                            <label for="proteins">Proteins:</label>
+                            <div class="value" id="proteins"></div>
+                        </div>
+                        <div class="form-item">
+                            <label for="carbohydrates">Carbohydrates:</label>
+                            <div class="value" id="carbohydrates"></div>
+                        </div>
+                        <div class="form-item">
+                            <label for="fat">Fat:</label>
+                            <div class="value" id="fat"></div>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="goalsButtons">
+                            <button class="goalsButton" id="changeInfoButton">Change Info</button>
+                            <button class="goalsButton" id="changeUserButton">Change User</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <span id="credit">
+                by Nielsen
+            </span>  
+        </div>
+
+        <!-- Credit -->
+        
+
+        <!-- Modal to Change Info -->
+        <div class="modal" id="changeInfoContainer">
+            <div id="changeInfoContent" class="modalContent">
+                <h2 id="addText">Do you want to change your info?</h2>
+                <div id="changeButtons">
+                    <form id="changeInfo" action="/infochange" method="POST">
+                        <button class="changeButton" id="confirmChangeInfo">Confirm</button>
+                    </form>
+
+                    <button class="changeButton" id="cancelChangeInfo">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal to Change User -->
+        <div class="modal" id="changeUserContainer">
+            <div id="changeUserContent" class="modalContent">
+                <h2 id="addText">Do you want to change User? This action cannot be reversed</h2>
+                <div id="changeButtons">
+                    <form id="changeInfo" action="/userchange" method="POST">
+                        <button class="changeButton" id="confirmChangeUser">Confirm</button>
+                    </form>
+
+                    <button class="changeButton" id="cancelChangeUser">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tooltip -->
+        <span class="tooltipGoals" id="userInfo">tooltip!</span>
+
+        <script>
+            let userName = localStorage.getItem('userName');
+
+            // Show Change Info Modal
+            const changeInfoButton = document.getElementById("changeInfoButton");
+            const changeInfoContainer = document.getElementById('changeInfoContainer');
+
+            const cancelChangeInfoButton = document.getElementById('cancelChangeInfo');
+            const confirmChangeInfoButton = document.getElementById('confirmChangeInfo');
+
+            changeInfoButton.addEventListener('click', () => {
+                changeInfoContainer.style.display = 'flex';
+            });
+            
+            cancelChangeInfoButton.addEventListener('click', () => {
+                changeInfoContainer.style.display = 'none';
+            });
+
+            // Show Change User Modal
+            const changeUserButton = document.getElementById("changeUserButton");
+            const changeUserContainer = document.getElementById('changeUserContainer');
+
+            const cancelChangeUserButton = document.getElementById('cancelChangeUser');
+            const confirmChangeUserButton = document.getElementById('confirmChangeUser');
+
+            changeUserButton.addEventListener('click', () => {
+                changeUserContainer.style.display = 'flex';
+            });
+            
+            cancelChangeUserButton.addEventListener('click', () => {
+                changeUserContainer.style.display = 'none';
+            });
+
+            // Change User 
+            confirmChangeUserButton.addEventListener('click', async () => {
+                localStorage.clear();
+            });
+
+            // User Tooltip
+            // Show and Hide the Item's Tooltip
+            const tooltip = document.getElementById("userInfo");
+
+            function addTooltipListeners() {
+                let userAge = localStorage.getItem('userAge');
+                let userWeight = localStorage.getItem('userWeight');
+                let userHeight = localStorage.getItem('userHeight');
+
+                let userGender = localStorage.getItem('userGender');
+                if (userGender === "option1"){
+                    userGender = "Female"
+                }
+                if (userGender === "option2"){
+                    userGender = "Male"
+                }
+
+                const nameElement = document.getElementById("userTooltip"); // Seleciona o nome com o ID userTooltip
+                
+                tooltip.innerHTML = `
+                    <div id="tooltipExtremitie" class="toolText">${userName}</div>
+                    <div class="toolText">Height: ${userHeight}cm</div>
+                    <div class="toolText">Weight: ${userWeight}Kg</div>
+                    <div class="toolText">Age: ${userAge} years</div>
+                    <div class="toolText">Gender: ${userGender}</div>
+                `;
+
+                nameElement.addEventListener("mousemove", (event) => {
+                    tooltip.style.display = "block"; 
+                    tooltip.style.left = event.pageX + 10 + "px"; 
+                    tooltip.style.top = event.pageY + 10 + "px"; 
+                });
+                
+                // Hide Tooltip
+                nameElement.addEventListener("mouseleave", () => {
+                    tooltip.style.display = "none";
+                });
+            }
+
+            // Goals Calcule
+            document.getElementById('warning').innerHTML = `Your Daily Goals, <span id="userTooltip">${userName}</span>.`;
+
+            addTooltipListeners();
+            
+            let height = localStorage.getItem('userHeight');
+            let weight = localStorage.getItem('userWeight');
+            let age = localStorage.getItem('userAge');
+            let gender = localStorage.getItem('userGender');
+
+            const water = 35 * weight / 1000;
+
+            let calories;
+            if (gender === "option1") {
+                calories = 655 + (9.6 * weight) + (1.8 * height) - (4.7 * age);
+            } else {
+                calories = 66 + (13.7 * weight) + (5 * height) - (6.8 * age);
+            }
+                
+            const proteins = 0.83 * weight;
+            const carbohydrates = 5 * weight;
+            const fat = 0.3 * calories;
+
+            document.getElementById('water').innerHTML = `${water.toFixed(2)} Liters`;
+            document.getElementById('calories').innerHTML = `${calories.toFixed(2)} Kcal`;
+            document.getElementById('proteins').innerHTML = `${proteins.toFixed(2)} Grams`;
+            document.getElementById('carbohydrates').innerHTML = `${carbohydrates.toFixed(2)} Grams`;
+            document.getElementById('fat').innerHTML = `${fat.toFixed(2)} Grams`;
+
+            localStorage.setItem('goalWater', water);
+            localStorage.setItem('goalCalories', calories);
+            localStorage.setItem('goalProteins', proteins);
+            localStorage.setItem('goalCarbohydrates', carbohydrates);
+            localStorage.setItem('goalFat', fat);
+
+            localStorage.setItem('userWater', 0);
+            localStorage.setItem('userCalories', 0);
+            localStorage.setItem('userProteins', 0);
+            localStorage.setItem('userCarbohydrates', 0);
+            localStorage.setItem('userFat', 0);
+
+        </script>
+    </body>
+</html>

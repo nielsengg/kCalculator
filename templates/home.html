@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+
+        <!-- CSS link -->
+        <link rel="stylesheet" href="../static/style.css">
+
+        <!-- Font link -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+        <title>kCalculator</title>
+        
+    </head>
+    
+    <body>
+        <div id="pageContainer">
+            <!-- Top Page -->
+            <div id="topPage" class="containerVertical">
+                <!-- Navegation -->
+                <div class="elementVertical">
+                    <header class="header"> 
+                        <nav class="navbar">
+                            <a class="index active">Home</a></li>
+                            <a>-</a>
+                            <a href="/goals" class="index">Goals</a></li>
+                
+                        </nav>
+                    </header>
+                </div>
+
+                <!-- Title -->
+                <div class="elementVertical">
+                    <h1>kCalculator</h1>
+                </div>  
+                <hr>
+            </div>
+
+            <!-- Massage to User -->
+            <h2 id="hello"></h2>
+
+            <!-- Content -->
+            <div class="containerHorizontal" id="bodyHome">  
+                <!-- Progress Bars -->
+                <div class="elementHorizontal">
+                    <div class="progressContainer" id="progressText">
+                        <h2 class="homeWarning">Your Progress</h2>
+                    </div>
+                    <div class="progressContainer">
+                        <div class="textBar" id="textWater"></div>
+                        <div class="progressBar" id="barWater"></div>
+                    </div>
+                    <div class="progressContainer">
+                        <div class="textBar" id="textCalories"></div>
+                        <div class="progressBar" id="barCalories"></div>    
+                    </div>
+                    <div class="progressContainer">
+                        <div class="textBar" id="textProteins"></div>
+                        <div class="progressBar" id="barProteins"></div>
+                    </div>
+                    <div class="progressContainer">
+                        <div class="textBar" id="textCarbohydrates"></div>
+                        <div class="progressBar" id="barCarbohydrates"></div>
+                    </div>
+                    <div class="progressContainer">
+                        <div class="textBar" id="textFat"></div>
+                        <div class="progressBar" id="barFat"></div>
+                    </div>
+                    
+                </div>
+
+                <!-- History -->
+                <div class="elementHorizontal">
+                    <div id="historyContainer">
+                        <h2 class="homeWarning" id="historyWarning">History</h2>
+
+                        <div id="historyBox">
+                            
+                            
+                            <table id="historyTable">
+                                <tbody>
+                                    <span id="historyEmpty">Click on Add Item to Start!</span>
+                                <!-- Data will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Buttons -->
+                        <div class="historyButtons">
+                            <button class="homeButton" id="addButton">Add Item</button>
+                            <button class="homeButton" id="clearButton">Clear All</button>
+                        </div>
+                    </div>                
+                </div>
+            </div>
+
+            <!-- Credit -->
+            <span id="credit">
+                by Nielsen
+            </span>  
+        </div>
+
+        <!-- Tooltip -->
+        <span class="tooltipHome" id="itemInfo">tooltip!</span>
+
+        <!-- Modal to Add Item -->
+        <div class="modal" id="modalContainer">
+            <form id="addItem" method="POST">
+                
+                <div id="modalContent" class="modalContent">
+                    <button id="exit">X</button>
+                    <h2 id="addText">You can add an item!</h2>
+                    <input type="text" id="itemName" maxlength="15" placeholder="Enter the name of the food or drink here">
+
+                    <div class="modalItem">
+                        <label>Water (Liters):</label>
+                        <input class="itemInput" id="inputWater" type="number" name="water" placeholder="0.0" required></input>
+                    </div>
+                    <div class="modalItem">
+                        <label>Calories (Kcal):</label>
+                        <input class="itemInput" id="inputCalories" type="number" name="calories" placeholder="0.0" required></input>
+                    </div>
+                    <div class="modalItem">
+                        <label>Proteins (Grams):</label>
+                        <input class="itemInput" id="inputProteins" type="number" name="proteins" placeholder="0.0" required></input>
+                    </div>
+                    <div class="modalItem">
+                        <label>Carbohydrates (Grams):</label>
+                        <input class="itemInput" id="inputCarbohydrates" type="number" name="carbohydrates" placeholder="0.0" required></input>
+                    </div>
+                    <div class="modalItem">
+                        <label>Fat (Grams):</label>
+                        <input class="itemInput" id="inputFat" type="number" name="fat" placeholder="0.0" required></input>
+                    </div>
+
+                    <button id="saveModalButton">Complete</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Modal to Clear History -->
+        <div class="modal" id="clearContainer">
+            <div id="clearContent" class="modalContent">
+                <h2 id="addText">Do you want to clear your history? This action cannot be reversed</h2>
+                    <div id="clearButtons">
+                        <form id="clearHistory" action="/clearHistory" method="POST">
+                            <button class="clearButton" id="confirmClear">Confirm</button>
+                        </form>
+                        <button class="clearButton" id="cancelClear">Cancel</button>
+                    </div>
+            </div>
+        </div>
+
+        <script>
+            // Verify Empty Table to Write Message
+            let emptyWarning = document.getElementById('historyEmpty');
+
+            async function isJsonEmpty(url) {
+            try {
+                // Busca o arquivo JSON
+                const response = await fetch(url);
+                if (!response.ok) {
+                throw new Error('Erro ao carregar o arquivo JSON');
+                }
+
+                // Converte o conteúdo para JSON
+                const jsonData = await response.json();
+
+                // Verifica se o JSON está vazio
+                return Object.keys(jsonData).length === 0;
+            } catch (error) {
+                console.error('Erro:', error);
+                return false; // Retorna falso em caso de erro
+            }
+            }
+
+            const jsonUrl = 'http://127.0.0.1:5000/data';
+            isJsonEmpty(jsonUrl).then(isEmpty => {
+            if (isEmpty) {
+                emptyWarning.style.display = 'flex';
+            } else {
+                emptyWarning.style.display = 'solid';
+            }
+            });
+
+            // Show Add Modal
+            const addModalButton = document.getElementById('addButton');
+            const saveModalButton = document.getElementById('saveModalButton');
+            const modalContainer = document.getElementById('modalContainer');
+            const exitButton = document.getElementById('exit');
+
+            addModalButton.addEventListener('click', () => {
+                modalContainer.style.display = 'flex';
+            });
+
+            exitButton.addEventListener('click', () => {
+                modalContainer.style.display = 'none';
+            });
+
+            // Clear History
+            const clearButton = document.getElementById("clearButton");
+            const clearContainer = document.getElementById('clearContainer');
+            
+            const cancelClearButton = document.getElementById('cancelClear');
+            const confirmClearButton = document.getElementById('confirmClear');
+
+            clearButton.addEventListener('click', () => {
+                clearContainer.style.display = 'flex';
+            });
+            
+            cancelClearButton.addEventListener('click', () => {
+                clearContainer.style.display = 'none';
+            });
+
+            confirmClearButton.addEventListener('click', async () => {
+                const response = await fetch('/clearHistory', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ filename: filename })
+                });
+                const result = await response.text();
+                document.getElementById('result').innerText = result; 
+            });
+
+            // Sum values to the Progress Bar %
+            function fetchAndSumValues() {
+                fetch('http://127.0.0.1:5000/data')
+                    .then(response => response.json())
+                    .then(data => {
+                        let userWater = 0;
+                        let userCalories = 0;
+                        let userProteins = 0;
+                        let userCarbohydrates = 0;
+                        let userFat = 0;
+
+                        data.forEach(item => {
+                            userWater += item.itemWater;
+                            userCalories += item.itemCalories;
+                            userProteins += item.itemProteins;
+                            userCarbohydrates += item.itemCarbohydrates;
+                            userFat += item.itemFat;
+                        });
+
+                        localStorage.setItem('userWater', userWater);
+                        localStorage.setItem('userCalories', userCalories);
+                        localStorage.setItem('userProteins', userProteins);
+                        localStorage.setItem('userCarbohydrates', userCarbohydrates);
+                        localStorage.setItem('userFat', userFat);
+
+                        updateProgressBars();
+                        buildTable()
+                        console.log("Fetching and summing values...")
+                    })
+                    .catch(error => console.error('Error:', error));
+            }
+
+            // History Table
+            function buildTable() {
+                fetch('http://127.0.0.1:5000/data')
+                    .then(response => response.json())
+                    .then(data => {
+                const tableBody = document.getElementById('historyBox').querySelector('tbody');
+    
+                tableBody.innerHTML = '';
+
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="historyName">${item.itemName}</td>
+                        <td class="historyTime">${item.itemTime}</td>
+                    `;
+                    tableBody.appendChild(row);
+                });
+                addTooltipListeners();
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+}
+
+            // Progress Bars
+            function updateProgressBars() {
+
+                // Get localStorage data
+                let userWater = Number(localStorage.getItem('userWater'));
+                let userCalories = Number(localStorage.getItem('userCalories'));
+                let userProteins = Number(localStorage.getItem('userProteins'));
+                let userCarbohydrates = Number(localStorage.getItem('userCarbohydrates'));
+                let userFat = Number(localStorage.getItem('userFat'));
+
+                // Get the Goals
+                let goalWater = Number(localStorage.getItem('goalWater'));
+                let goalCalories = Number(localStorage.getItem('goalCalories'));
+                let goalProteins = Number(localStorage.getItem('goalProteins'));
+                let goalCarbohydrates = Number(localStorage.getItem('goalCarbohydrates'));
+                let goalFat = Number(localStorage.getItem('goalFat'));
+
+                // Set Progress
+                let waterPercent = userWater === 0 ? 0 : (userWater / goalWater) * 100;
+                let caloriesPercent = userCalories === 0 ? 0 : (userCalories / goalCalories) * 100;
+                let proteinsPercent = userProteins === 0 ? 0 : (userProteins / goalProteins) * 100; 
+                let carbohydratesPercent = userCarbohydrates === 0 ? 0 : (userCarbohydrates / goalCarbohydrates) * 100;
+                let fatPercent = userFat === 0 ? 0 : (userFat / goalFat) * 100;
+
+                // Update Massage to User
+                if (waterPercent >= 100 && caloriesPercent >= 100 && proteinsPercent >= 100 && carbohydratesPercent >= 100 && fatPercent >= 100) {
+                    let name = localStorage.getItem('userName');
+                    document.getElementById('hello').innerHTML = `Congragulations, ${name}!`;
+                }
+
+                // Write Progress
+                const progressWater = document.querySelector('#barWater');
+                progressWater.style.width = waterPercent + '%';
+
+                const progressCalories = document.querySelector('#barCalories');
+                progressCalories.style.width = caloriesPercent + '%';
+
+                const progressProteins = document.querySelector('#barProteins');
+                progressProteins.style.width = proteinsPercent + '%';
+
+                const progressCarbohydrates = document.querySelector('#barCarbohydrates');
+                progressCarbohydrates.style.width = carbohydratesPercent + '%';
+
+                const progressFat = document.querySelector('#barFat');
+                progressFat.style.width = fatPercent + '%';
+
+                document.getElementById('barWater').innerHTML = `&nbsp;&nbsp;Water ${waterPercent.toFixed(0)}%`
+                document.getElementById('barCalories').innerHTML = `&nbsp;&nbsp;Calories ${caloriesPercent.toFixed(0)}%`
+                document.getElementById('barProteins').innerHTML = `&nbsp;&nbsp;Proteins ${proteinsPercent.toFixed(0)}%`
+                document.getElementById('barCarbohydrates').innerHTML = `&nbsp;&nbsp;Carbohydrates ${carbohydratesPercent.toFixed(0)}%`
+                document.getElementById('barFat').innerHTML = `&nbsp;&nbsp;Fat ${fatPercent.toFixed(0)}%`
+
+                document.getElementById('textWater').innerHTML = `&nbsp;&nbsp;Water ${waterPercent.toFixed(0)}%`
+                document.getElementById('textCalories').innerHTML = `&nbsp;&nbsp;Calories ${caloriesPercent.toFixed(0)}%`
+                document.getElementById('textProteins').innerHTML = `&nbsp;&nbsp;Proteins ${proteinsPercent.toFixed(0)}%`
+                document.getElementById('textCarbohydrates').innerHTML = `&nbsp;&nbsp;Carbohydrates ${carbohydratesPercent.toFixed(0)}%`
+                document.getElementById('textFat').innerHTML = `&nbsp;&nbsp;Fat ${fatPercent.toFixed(0)}%`
+                
+                const progressBars = document.querySelectorAll('.progressBar');
+                progressBars.forEach(bar => {
+                    bar.style.whiteSpace = 'nowrap';
+                    bar.style.overflow = 'hidden';
+                });
+            }
+
+            // Save Item
+            const inputFields = document.querySelectorAll('.itemInput');
+
+            inputFields.forEach(inputField => {
+                inputField.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter') {
+                        event.preventDefault(); 
+                        alert('Please, click on Complete');
+                    }
+                });
+            });
+
+            saveModalButton.addEventListener('click', () => {
+                let emptyWarning = document.getElementById('historyEmpty');
+                emptyWarning.style.display = 'none';
+            });
+
+            saveModalButton.addEventListener('click', (event) => {
+                const emptyWarning = document.getElementById('historyEmpty');
+
+                emptyWarning.style.display = 'solid';
+
+                event.preventDefault();
+
+                //  Input Verification
+                const inputs = document.querySelectorAll('.itemInput');
+                let isAnyInputFilled = false;
+
+                inputs.forEach(input => {
+                    if (input.value.trim() !== '') {
+                        isAnyInputFilled = true;
+                    }
+                });
+
+                if (!isAnyInputFilled) {
+                    alert('Please fill at least one input before closing.');
+                    return;
+                } else {
+                    
+                // Save Item
+                let itemName = document.getElementById('itemName').value;
+                let itemWater = document.getElementById('inputWater').value;
+                let itemCalories = document.getElementById('inputCalories').value;
+                let itemProteins = document.getElementById('inputProteins').value;
+                let itemCarbohydrates = document.getElementById('inputCarbohydrates').value;
+                let itemFat = document.getElementById('inputFat').value;
+
+                const now = new Date();
+                let itemTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+
+                fetch('http://127.0.0.1:5000/data')
+                    .then(response => response.json())
+                    .then(data => {
+                        let itemCount = data.length;
+
+                        const itemData = {
+                            itemID: itemCount || 0,
+                            itemName: itemName || "Unknown",
+                            itemWater: parseFloat(itemWater) || 0,
+                            itemCalories: parseFloat(itemCalories) || 0,
+                            itemProteins: parseFloat(itemProteins) || 0,
+                            itemCarbohydrates: parseFloat(itemCarbohydrates) || 0,
+                            itemFat: parseFloat(itemFat) || 0,
+                            itemTime: itemTime || "Unknown"
+                        };
+
+                        fetch('http://127.0.0.1:5000/save', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(itemData)
+                        })
+                        .then(response => response.json())
+                        .then(result => {
+                            console.log(result.message);
+                            fetchAndSumValues(); // Fetch and sum values after saving
+                        })
+                        .catch(error => console.error('Error:', error));
+                    })
+                    .catch(error => console.error('Error:', error));
+                    
+                    // Clear input fields
+                    document.getElementById('itemName').value = '';
+                    document.getElementById('inputWater').value = '';
+                    document.getElementById('inputCalories').value = '';
+                    document.getElementById('inputProteins').value = '';
+                    document.getElementById('inputCarbohydrates').value = '';
+                    document.getElementById('inputFat').value = '';
+
+                    // Hide Add modal
+                    modalContainer.style.display = 'none';
+                }
+            });
+
+           
+
+            // Load Saved Data
+            function loadSavedData() {
+            fetch('http://127.0.0.1:5000/data')
+                .then(response => response.json())
+                .then(data => {
+                    output.textContent = JSON.stringify(data, null, 2);
+                })
+                .catch(error => console.error('Error:', error));
+            }
+
+            fetchAndSumValues();
+            loadSavedData();
+
+            // Show and Hide the Item's Tooltip
+            const tooltip = document.getElementById("itemInfo");
+            
+            function addTooltipListeners() {
+                const triggers = document.querySelectorAll(".historyName");
+                
+                triggers.forEach(trigger => {
+                    // Show Tooltip
+                    trigger.addEventListener("mousemove", (event) => {
+                        tooltip.style.display = "block"; 
+                        tooltip.style.left = event.pageX + 10 + "px"; 
+                        tooltip.style.top = event.pageY + 10 + "px"; 
+                    });
+                    
+                    // Hide Tooltip
+                    trigger.addEventListener("mouseleave", () => {
+                        tooltip.style.display = "none";
+                    });
+
+                    // Verify Item to Show the Correct Tooltip
+                    fetch('http://127.0.0.1:5000/data')
+                    .then(response => response.json())
+                    .then(data => {
+                        let itemCount = data.length;
+                        const item = data.find(d => d.itemName === trigger.textContent);
+                        if (item) {
+                            trigger.addEventListener("mousemove", (event) => {
+                                tooltip.innerHTML = `
+                                    <div id="tooltipExtremitie" class="toolText">${item.itemName}</div>
+                                    <div class="toolText">Water: ${item.itemWater}L</div>
+                                    <div class="toolText">Calories: ${item.itemCalories}Kcal</div>
+                                    <div class="toolText">Proteins: ${item.itemProteins}g</div>
+                                    <div class="toolText">Carbohydrates: ${item.itemCarbohydrates} g</div>
+                                    <div class="toolText">Fat: ${item.itemFat}g</div>
+                                    <div id="tooltipExtremitie" class="toolText">${item.itemTime}</div>
+                                `;
+                            });
+                        }
+                    });
+                });
+            }
+        </script>
+    </body>     
+</html>

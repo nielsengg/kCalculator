@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+
+    <!-- CSS link -->
+    <link rel="stylesheet" href="../static/style.css">
+
+    <!-- Font link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+    <style>
+        body{
+            overflow-x: hidden;
+        }
+    </style>
+
+    <title>kCalculator</title>
+</head>
+
+<body>
+    <!-- Top Page -->
+    <div id="topPage" class="containerVertical">
+        <!-- Title -->
+        <div class="elementVertical">
+            <h1>kCalculator</h1>
+        </div>  
+
+        <hr>
+    </div>
+
+    <!-- Content -->
+    <div class="containerHorizontal" id="bodyAll">
+
+        <!-- Message to User -->
+        <div class="elementHorizontal">
+            <p id="g_warning"></p>
+        </div>
+        
+        <!-- Input USer's Informations -->
+        <div class="elementHorizontal">
+            <div class="form-container"> 
+                <form action="/info" id="info" method="POST">
+                    <div class="form-item">
+                        <label for="height">Height (cm):</label>
+                        <input type="number" id="height" class="userInput" name="height" placeholder="0.0" required onkeydown="saveInfo()"> </input>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="weight">Weight (Kg):</label>
+                            <input type="number" id="weight" class="userInput" name="weight" placeholder="0.0" required onkeydown="saveInfo()"> </input>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="age">Age:</label>
+                            <input type="number" id="age" class="userInput" name="age" placeholder="0" required onkeydown="saveInfo()"> </input>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="gender">Gender:</label>
+                            <select id="gender" name="gender" required>
+                                <option value="option1">Female</option>
+                                <option value="option2">Male</option>
+                            </select>
+                    </div>
+
+                    <button type="submit" id="submit" onclick="saveInfo()">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update Message to User
+        let name = localStorage.getItem('userName');
+        document.getElementById('g_warning').innerHTML = `${name}, fill in all the information.`
+
+        // Save User's Information
+        function saveInfo() {
+                let height = document.getElementById('height').value;
+                localStorage.setItem('userHeight', height);
+
+                let weight = document.getElementById('weight').value;
+                localStorage.setItem('userWeight', weight);
+
+                let age = document.getElementById('age').value;
+                localStorage.setItem('userAge', age);
+
+                let gender = document.getElementById('gender').value;
+                localStorage.setItem('userGender', gender);
+
+        }
+    </script>
+
+</body>
+
+</html>

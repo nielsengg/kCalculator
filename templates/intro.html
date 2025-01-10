@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">  
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+
+        <!-- CSS link -->
+        <link rel="stylesheet" href="../static/style.css">
+
+        <!-- Font link -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+        <title>kCalculator</title>
+    </head>
+
+    <body>
+        <!-- Top Page -->
+        <div id="topPage" class="containerVertical">
+            <!-- Title -->
+            <div class="elementVertical">
+                <h1>kCalculator</h1>
+            </div>  
+
+            <hr>
+        </div>
+
+        <!-- Content -->
+        <div class="containerHorizontal">
+            <!-- Message to User -->
+            <div class="elementHorizontal">
+                <p id="helloName">Hello, what's your name?</p>
+            </div>
+
+            <!-- Input User's Name -->
+            <div class="elementHorizontal">
+                <form action="/login" id="login" method="POST">
+                    <input type="text" id="username" name="username" placeholder="Enter your name here" required onkeydown="saveName()">
+                </form>
+            </div>
+        </div>
+
+        <script>
+            function saveName() {
+                let name = document.getElementById('username').value;
+                localStorage.setItem('userName', name);
+            }
+        </script>
+    </body>
+</html>

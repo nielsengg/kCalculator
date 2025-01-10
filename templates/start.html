@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+
+        <!-- CSS link -->
+        <link rel="stylesheet" href="../static/style.css">
+
+        <!-- Font link -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+        <style>
+            body{
+                overflow-x: hidden;
+            }
+        </style>
+
+        <title>kCalculator</title>
+    </head>
+    
+    <body>
+        <!-- Top Page -->
+        <div id="topPage" class="containerVertical">
+            <!-- Title -->
+            <div class="elementVertical">
+                <h1>kCalculator</h1>
+            </div>  
+
+            <hr>
+        </div>
+
+        <!-- Content -->
+        <div class="containerHorizontal" id="bodyAll">
+
+            <!-- Message to User -->
+            <div class="elementHorizontal">
+                <p id="warning">This website helps you take care of your health.You can track all your nutrient intake to regulate your life. Just click the next button.</p>
+            </div>
+
+            <!-- Let's Start -->
+            <div class="elementHorizontal">
+                <form action="/start" id="start" method="POST">
+                    <button id="start">Let's Start!</button>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            let name = localStorage.getItem('userName');
+            document.getElementById('hello').innerHTML = `Hello, ${name}!`;
+        </script>
+    </body>
+</html>

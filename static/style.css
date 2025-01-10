@@ -1,0 +1,899 @@
+body {
+    font-family: 'JetBrains Mono';
+    color: #cb6ce6; 
+    margin: 0; 
+}
+
+body::-webkit-scrollbar {
+    width: 7px;
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 40px; 
+    background-color: #cb6ce6;
+}
+
+body::-webkit-scrollbar-track {
+    border-radius: 40px; 
+    background-color: #b8b8b8;
+}
+
+h1 {
+    font-size: 40px;
+    padding: 0;
+    margin: 0;
+    color: #cb6ce6; 
+}
+
+hr {
+    border: 1px solid #cb6ce6;
+    border-radius: 40px;
+    width: 80%;
+    margin: 10px 0;
+    margin-bottom: 0;
+    left: 50%;
+
+    /* position: fixed;
+    top: 90px; */
+}
+
+a {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+form{
+    box-shadow: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+}
+
+select{
+    font-family: 'JetBrains Mono';
+    font-size: 20px;
+    background-color: #cb6ce6;
+    color: #ffffff; 
+    border-radius: 40px;
+    margin-top: 15px;
+    width: 300px;
+    height: 40px;
+    font-size: 20px;
+    text-align: center;
+    box-shadow: none;
+    border: none;
+}
+
+select:hover{
+    background-color: #bf67d7;
+    color: #fff;
+}
+
+select:focus{
+    outline: none;
+    border: none;
+}
+
+input::placeholder {
+    align-items: center;
+    color: #ffffff; 
+    border: none;
+}
+
+input:hover{
+    background-color: #bf67d7;
+    color: #fff;
+}
+
+input:focus{
+    outline: none;
+    border: none;
+    color: #fff;
+}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #cb6ce6 inset;
+    -webkit-text-fill-color: #ffffff;
+}
+
+tbody{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+tr {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+button{
+    cursor: pointer;
+}
+
+button:hover{
+    background-color: #bf67d7;
+}
+
+option:hover{
+    background-color: #bf67d7;
+}
+
+/* ------------------------------------------ */
+
+#historyEmpty{
+    display: none;
+    margin-top: 105px;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    height: 100px;
+
+}
+
+#userTooltip{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#topPage{
+    /* position: fixed; */
+    height: 100px;
+    width: 100%;
+    z-index: 100;
+    background-color:white;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+#username {
+    font-family: 'JetBrains Mono';
+    background-color: #cb6ce6;
+    color: #ffffff; 
+    border-radius: 40px;
+    border: none;
+    font-size: 20px;
+    width: 300px;
+    height: 40px;
+    text-align: center;
+}
+
+#hello{
+    font-size: 25px;
+    font-weight: normal;
+    position: fixed;
+    top: 100px;
+    width: 100%;
+    padding-top: 10px;
+    margin: 0;
+    color: #cb6ce6; 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+#helloName{
+    font-size: 25px;
+    text-align: center;
+}
+
+#warning{
+    font-size: 25px;
+    text-align: center;
+   
+}
+
+#g_warning{
+    font-size: 25px;
+    text-align: justify;
+    position: fixed;
+    width: 25%; 
+    text-align: center;
+}
+
+#start{
+    font-family: 'JetBrains Mono';
+    background-color: #cb6ce6;
+    color: #ffffff; 
+    border-radius: 40px;
+    border: none;
+    font-size: 20px;
+    width: 300px;
+    height: 40px;
+    text-align: center;
+}
+
+#start:hover{
+    background-color: #bf67d7;
+
+}
+
+#gender{
+    width: 115px;
+    height: 45px;
+    margin: 0;
+    text-align: center;
+
+    font-family: 'JetBrains Mono';
+    background-color: #cb6ce6;
+    color: #ffffff; 
+    border-radius: 40px;
+    border: none;
+    font-size: 20px;
+}
+
+#submit{
+    font-family: 'JetBrains Mono';
+    background-color: #cb6ce6;
+    color: #ffffff; 
+    border-radius: 40px;
+    border: none;
+    font-size: 20px;
+    width: 350px;
+    height: 40px;
+    margin-top: 4px;
+}
+
+#submit:hover{
+    background-color: #bf67d7;
+    color: #fff;
+}
+
+#progressText{
+    border: none;
+    justify-content: center;
+}
+
+#modalContainer {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#modalContent {
+    background-color: #fff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 30px;
+    width: 700px;
+    height: 500px;
+    max-height: 900px;
+    max-width: 600px;   
+    text-align: center;
+}
+
+#addText{
+    font-weight: normal;
+    font-size: 30px;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+#itemName{
+    font-family: 'JetBrains Mono';
+    width: 500px;
+    height: 25px;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #cb6ce6;
+    border: none;
+    border-radius: 40px;
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+}
+
+#saveModalButton {
+    color: #fff;
+    font-size: 20px;
+    font-family: 'JetBrains Mono';
+    font-weight: normal;
+    background-color: #cb6ce6;
+    border: none;
+    padding: 5px 40px;
+    border-radius: 40px;
+    cursor: pointer;
+}
+
+#saveModalButton:hover {
+    background-color: #bf67d7;
+}
+
+#exit {
+    position: relative;
+    left: 300px;
+    bottom: 15px;
+    background-color: transparent;
+    border: none; 
+    font-size: 20px;
+    color: #cb6ce6; 
+    cursor: pointer;
+    font-size: 25px;
+    margin: 0;
+    padding: 0;
+    font-weight: bolder;
+}
+
+#exit:hover {
+    color: #bf67d7;
+}
+
+#history{
+    border-radius: 40px;
+    text-align: center;
+    line-height: 40px;
+    color: #cb6ce6;
+    font-size: 25px;
+    position: relative;
+    
+}
+
+#historyContainer{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    /* border: 1px solid salmon; */
+    padding: 0;
+}
+
+#historyBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background-color: none;
+    border: 1px solid #cb6ce6;
+    width: 350px;
+    max-width: 350px;
+    height: 224px;
+    max-height: 224px;
+    border-radius: 40px;
+    margin-bottom: 20px;
+    margin-top: 0;
+}
+
+#historyTable{
+    width: 95%;
+    /* background-color: aqua; */
+    overflow-y: auto;
+    display: block;
+    padding: 20px;
+    padding-top: 0;
+    height: 190px;
+    max-height: 190px;
+    margin: auto;
+    margin-top: 17px;
+    margin-left: 5px;
+   
+}
+
+#historyTable::-webkit-scrollbar {
+    width: 4px;
+}
+
+#historyTable::-webkit-scrollbar-thumb {
+    border-radius: 40px;
+    background-color: #cb6ce6;
+}
+
+#historyTable::-webkit-scrollbar-track {
+    border-radius: 40px;
+    background-color: #dbdbdb;
+}
+
+#historyWarning{
+    margin-top: 15px;
+    justify-content: center;
+    width: 350px;
+    height: 50px;
+}
+
+#tooltipExtremitie{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#clearContainer {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#clearContent {
+    background-color: #fff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 30px;
+    width: auto;
+    height: auto;
+    max-height: auto;
+    max-width: auto;   
+    text-align: center;
+}
+
+#clearButtons{
+    width: 400px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+#changeButton:hover{
+    background-color: #bf67d7;
+}
+
+#changeUserContainer {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#changeUserContent {
+    background-color: #fff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 30px;
+    width: auto;
+    height: auto;
+    max-height: auto;
+    max-width: auto;   
+    text-align: center;
+}
+
+#changeButtons{
+    width: 400px;
+    height: 40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+#changeInfoContainer {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+#changeInfoContent {
+    background-color: #fff;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 30px;
+    width: auto;
+    height: auto;
+    max-height: auto;
+    max-width: auto;   
+    text-align: center;
+}
+
+#bodyAll{
+    animation: transitionGoals 0.3s ease forwards;
+}
+
+#bodyHome{
+    animation: transitionHome 0.3s ease forwards;
+}
+
+#credit{
+    display: flex;
+    font-weight: bold;
+    margin-top: 0;
+
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#userInfo{
+    margin: 10px;
+}
+
+#pageContainer{
+    height: 105vh;
+    width: auto;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+/* ------------------------------------------------------------ */
+
+.modal{
+    z-index: 101;
+}
+
+.modalContent{
+    animation: up 0.3s ease forwards;
+}
+
+.clearButton{
+    color: #fff;
+    font-size: 20px;
+    font-family: 'JetBrains Mono';
+    font-weight: normal;
+    background-color: #cb6ce6;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    height: 40px;
+    width: 150px;
+}
+
+.changeButton{
+    color: #fff;
+    font-size: 20px;
+    font-family: 'JetBrains Mono';
+    font-weight: normal;
+    background-color: #cb6ce6;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    height: 40px;
+    width: 150px;
+}
+
+.homeButton{
+    font-family: 'JetBrains Mono';
+    font-size: 15px;
+    width: 125px;
+    height: 40px;
+    background-color: #cb6ce6;
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+    padding: 0;
+    /* margin-top: 18px; */
+}
+
+.goalsButton{
+    font-family: 'JetBrains Mono';
+    font-size: 15px;
+    width: 150px;
+    height: 40px;
+    background-color: #cb6ce6;
+    color: #fff;
+    border: none;
+    border-radius: 40px;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.homeButton:hover{
+    background-color: #bf67d7;
+}
+
+.toolText{
+    font-size: 15px;
+}
+
+.tooltipHome {
+    background-color: #fff;
+    position: absolute;
+    color: #cb6ce6;
+    padding: 10px;
+    border: 1px solid #cb6ce6;
+    border-radius: 40px;
+    font-size: 14px;
+    display: none; 
+    pointer-events: none;
+    width: 200px;
+    max-width: 200px;
+}
+
+.tooltipGoals {
+    background-color: #fff;
+    position: absolute;
+    color: #cb6ce6;
+    padding: 10px;
+    border: 1px solid #cb6ce6;
+    border-radius: 40px;
+    font-size: 14px;
+    display: none; 
+    pointer-events: none;
+    height: 140px;
+    width: 200px;
+    max-width: 200px;
+}
+
+.historyName {
+    text-decoration: underline;
+    top: 0;
+    font-size: 20px;
+    padding-bottom: 10px;
+    cursor: pointer;
+}
+
+.historyTime {
+    top: 0;
+    padding-bottom: 10px;
+    font-size: 20px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #cb6ce6;
+    border-radius: 25px;
+    padding: 10px 20px;
+    width: 300px;
+    color: #cb6ce6;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 8px;
+}
+
+.value {
+    background-color: #cb6ce6;
+    border: 2px solid #cb6ce6;
+    border-radius: 25px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: normal;
+    width: 150px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.navbar a {
+    position: relative;
+    text-decoration: none;
+    color: #cb6ce6;
+    font-weight: bold;
+    transition: color 0.3s;
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+
+.index::before{
+    content: '';
+    position: absolute;
+    top: 90%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #cb6ce6;
+    transition: .3s;
+}
+
+.index.active{
+    font-weight: bold;
+}
+
+.index:hover::before{
+    width: 100%;
+}
+
+.index:hover {
+    color: #bf67d7;
+}
+
+.userInput{
+    width: 110px;
+    height: 45px;
+    margin: 0;
+    text-align: center;
+    font-family: 'JetBrains Mono';
+    background-color: #cb6ce6;
+    color: #ffffff; 
+    border-radius: 40px;
+    border: none;
+    font-size: 20px;
+}
+
+.progressContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8px;
+    /* right: 350px; */
+    width: 350px;
+    height: 50px;
+    background-color: #fff;
+    border: 1px solid #cb6ce6;
+    border-radius: 40px;
+    position: relative;
+    top: 0;
+    overflow: hidden;
+}
+
+.progressBar {
+    width: 1;
+    height: 100%;
+    background-color: #cb6ce6;
+    border-radius: 40px;
+    text-align: left;
+    line-height: 10px;
+    color: #fff;
+    font-size: 20px;
+    position: absolute;
+    left: 0;
+    display: flex;
+    align-items: center;
+}
+
+.textBar {
+    height: 100%;
+    background: none;
+    text-align: left;
+    line-height: 10px;
+    color: #cb6ce6;
+    font-size: 20px;
+    position: absolute;
+    left: 0;
+    display: flex;
+    align-items: center;
+}
+
+.itemInput{
+    width: 110px;
+    height: 35px;
+    margin: 0;
+    text-align: center;
+    border: 1px solid #cb6ce6;
+    border-radius: 40px;
+    background-color: #cb6ce6;
+    font-family: 'JetBrains Mono';
+    font-size: 20px;
+    color: #fff;
+}
+
+.modalItem{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #cb6ce6;
+    border-radius: 40px;
+    padding: 10px 20px;
+    width: 350px;
+    color: #cb6ce6;
+    font-weight: bold;
+    font-size: 1rem;
+    margin-top: 4px;
+    margin-bottom: 7px;
+}
+
+.containerHorizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 80vh;
+}
+
+.elementHorizontal{
+    width: 350px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerVertical {
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center; 
+    height: 100%;
+}
+
+.elementVertical{
+    width: 264px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.homeWarning{
+    border-radius: 40px;
+    text-align: center;
+    color: #cb6ce6;
+    font-size: 25px;
+    position: relative;
+    margin: 0;
+    justify-content: center;
+ 
+}
+
+.historyButtons{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.goalsButtons{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+/* Animations */
+@keyframes up{
+    0%{ transform: translateY(200px);}
+    100%{ transform: translateY(0px);}
+}
+
+@keyframes transitionHome{
+    0%{ transform: translatex(-1000px);}
+    100%{ transform: translatex(0px);}
+}
+
+@keyframes transitionGoals{
+    0%{ transform: translatex(+1000px);}
+    100%{ transform: translatex(0px);}
+}
+
+/* Others */
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
